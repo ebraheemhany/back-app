@@ -22,3 +22,4 @@ const sendOTPEmail = async (email, otp) => {
     throw new Error(error.message);
   }
 };
+module.exports = { sendOTPEmail };
