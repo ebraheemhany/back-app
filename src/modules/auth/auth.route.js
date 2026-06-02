@@ -29,6 +29,22 @@ route.post(
 route.post("/refresh", refreshTokenController);
 route.post("/logout", logoutController);
 
-https://back-app-production-e21a.up.railway.app/api/google;
+// google login
+route.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+  (req, res) => {
+    // Passport will redirect to Google
+  },
+);
+
+route.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "/login",
+  }),
+  googleController,
+);
 
 module.exports = route;
