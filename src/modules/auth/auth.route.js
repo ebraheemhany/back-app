@@ -31,7 +31,7 @@ route.post("/logout", logoutController);
 
 // google login
 route.get(
-  "/google",
+  "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] }),
   (req, res) => {
     // Passport will redirect to Google
@@ -39,7 +39,7 @@ route.get(
 );
 
 route.get(
-  "/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
     session: false,
     failureRedirect: "/api/login",
