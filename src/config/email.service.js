@@ -21,26 +21,30 @@
 
 // module.exports = { sendOTPEmail };
 
-const { TransactionalEmailsApi, SendSmtpEmail } = require("@getbrevo/brevo");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
-const apiInstance = new TransactionalEmailsApi();
+const client = SibApiV3Sdk.ApiClient.instance;
 
-apiInstance.authentications.apiKey.apiKey = process.env.BREVO_API_KEY;
+const apiKey = client.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const sendOTPEmail = async (email, otp) => {
-  const sendSmtpEmail = new SendSmtpEmail();
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
 
-  sendSmtpEmail.to = [{ email }];
   sendSmtpEmail.sender = {
-    email: "alihasan666.co@gmail.com",
+    email: process.env.SENDER_EMAIL,
     name: "App",
   };
+
+  sendSmtpEmail.to = [{ email }];
 
   sendSmtpEmail.subject = "Reset Password OTP";
 
   sendSmtpEmail.htmlContent = `
     <h2>Reset Password</h2>
-    <p>الـ OTP بتاعك هو:</p>
+    <p>OTP Code:</p>
     <h1>${otp}</h1>
   `;
 
