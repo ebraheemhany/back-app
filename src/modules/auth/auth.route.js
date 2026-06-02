@@ -42,7 +42,7 @@ route.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "/login",
+    failureRedirect: "/api/login",
   }),
   googleController,
 );
