@@ -5,10 +5,10 @@ const {
   deleteRefreshToken,
 } = require("./auth.tokens");
 const registerController = async (req, res) => {
-  const { userName, email, password } = req.body;
+ const { username, email, password } = req.body;
 
   try {
-    const user = await registerService({ userName, email, password });
+    const user = await registerService({ username, email, password });
     res.status(201).json({
       message: "User registered successfully",
       user,
