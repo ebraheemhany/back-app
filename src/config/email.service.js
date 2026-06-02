@@ -3,8 +3,8 @@ const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOTPEmail = async (email, otp) => {
-  await resend.emails.send({
-    from: "onboarding@resend.dev", // ده الـ default على الـ free plan
+  const { data, error } = await resend.emails.send({
+    from: "onboarding@resend.dev",
     to: email,
     subject: "Reset Password OTP",
     html: `
@@ -14,6 +14,11 @@ const sendOTPEmail = async (email, otp) => {
       <p>صالح لمدة 10 دقايق بس</p>
     `,
   });
-};
 
-module.exports = { sendOTPEmail };
+  // شوف في الـ Railway logs إيه اللي بيطلع
+  console.log("Resend response:", { data, error });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+};
