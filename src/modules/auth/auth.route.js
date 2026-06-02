@@ -29,19 +29,6 @@ route.post(
 route.post("/refresh", refreshTokenController);
 route.post("/logout", logoutController);
 
-// google login
-route.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] }),
-);
-
-route.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    session: false,
-    failureRedirect: "/login",
-  }),
-  googleController,
-);
+https://back-app-production-e21a.up.railway.app/api/google;
 
 module.exports = route;
