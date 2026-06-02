@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const { generateRefreshToken, generateAccessToken } = require("./auth.tokens");
 
-const registerService = async ({ userName, email, password }) => {
+const registerService = async ({ username, email, password }) => {
   // check if email exist
   const userExists = await pool.query("SELECT * FROM users WHERE email = $1", [
     email,
