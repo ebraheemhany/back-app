@@ -18,6 +18,7 @@ const app = express();
 const passport = require("passport");
 require("./modules/auth/google.strategy");
 app.use(helmet());
+app.set("trust proxy", 1);
 app.use(globalLimiter); //protection all route
 const allowedOrigins = ["http://localhost:3000"];
 
@@ -36,7 +37,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-app.set("trust proxy", 1);
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(passport.initialize());
