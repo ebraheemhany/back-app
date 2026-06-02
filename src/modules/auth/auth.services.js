@@ -42,13 +42,6 @@ const loginService = async ({ email, password }) => {
     throw new Error("invalid password");
   }
 
-  // Generate JWT Token
-  // const token = jwt.sign(
-  //   { id: user.rows[0].id, email: user.rows[0].email },
-  //   process.env.JWT_SECRET,
-  //   { expiresIn: "1d" },
-  // );
-
   const accessToken = await generateAccessToken(user.rows[0].id);
   const refreshToken = await generateRefreshToken(user.rows[0].id);
 
