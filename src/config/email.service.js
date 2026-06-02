@@ -1,16 +1,10 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOTPEmail = async (email, otp) => {
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+  await resend.emails.send({
+    from: "onboarding@resend.dev", // ده الـ default على الـ free plan
     to: email,
     subject: "Reset Password OTP",
     html: `
