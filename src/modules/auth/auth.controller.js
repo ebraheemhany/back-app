@@ -5,7 +5,7 @@ const {
   deleteRefreshToken,
 } = require("./auth.tokens");
 const registerController = async (req, res) => {
- const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const user = await registerService({ username, email, password });
@@ -28,10 +28,10 @@ const loginController = async (req, res) => {
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true, // JS في المتصفح مش يوصله
-      secure: process.env.NODE_ENV, // HTTPS فقط في Production
-      sameSite: "Strict", // حماية من CSRF
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 أيام
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({ message: "Login successful", accessToken, user });
