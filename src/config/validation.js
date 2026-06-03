@@ -41,7 +41,7 @@ const postValidation = (data) => {
       "string.min": "Content cannot be empty",
       "string.max": "Content must be less than 500 characters",
     }),
-  });
+  }).options({ allowUnknown: true }); // ✅ يتجاهل الـ fields التانية
   return schema.validate(data, { abortEarly: false });
 };
 // Comment validation
