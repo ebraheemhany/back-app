@@ -7,11 +7,11 @@ const {
   updateUserProfileController,
   uploadProfileImageController,
 } = require("./user.controller");
-route.get("/user/profile", authMiddleware, getUserProfileController);
+route.get("/user/profile/:id", authMiddleware, getUserProfileController);
 route.put(
   "/user/profile/update",
   authMiddleware,
   upload.single("profile_image"),
-  updateUserProfileController
+  updateUserProfileController,
 );
 module.exports = route;

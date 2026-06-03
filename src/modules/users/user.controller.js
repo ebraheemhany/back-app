@@ -6,7 +6,8 @@ const {
 const { uploadToCloudinary, cloudinary } = require("../../config/cloudinary");
 const getUserProfileController = async (req, res) => {
   try {
-    const user = await getUserProfileService(req.user.userId);
+    const { id } = req.params;
+    const user = await getUserProfileService(id);
     res.status(200).json({
       success: "success",
       user,
