@@ -4,6 +4,7 @@ const {
   getAllPostsService,
   updatePostService,
   searchService,
+  getPostsByUserIdService
 } = require("./post.service");
 const { uploadToCloudinary, cloudinary } = require("../../config/cloudinary");
 const pool = require("../../config/db");
@@ -189,11 +190,20 @@ const searchPostcontroller = async (req, res) => {
     });
   }
 };
-
+const getPostsByUserIdController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const posts = await getPostsByUserIdService(userId);
+    res.status(200).json({ posts });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports = {
   createPostController,
   deletePostController,
   getAllPostsController,
   updatePostController,
   searchPostcontroller,
+  getPostsByUserIdController,
 };

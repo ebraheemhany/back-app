@@ -111,6 +111,33 @@ const searchService = async (query) => {
     users: usersResult.rows,
   };
 };
+const getPostsByUserIdService = async (userId) => {
+  const posts = await pool.query(
+    `SELECT 
+      posts.id,
+      posts.content,
+      posts.media_url,
+      posts.media_type,
+      posts.created_at,
+      users.id AS user_id,
+      users.username,
+      users.profile_image,
+      COUNT(DISTINCT likes.id) AS likes_count,
+      COUNT(DISTINCT comments.id) AS comments_count
+    FROM posts
+    JOIN users ON posts.user_id = users.id
+    LEFT JOIN likes ON posts.id = likes.post_id
+    LEFT JOIN comments ON posts.id = comments.post_id
+    WHERE posts.user_id = $1
+    GROUP BY posts.id, users.id
+    ORDER BY posts.created_at DESC`,
+    [userId]
+  );
+
+  return posts.rows;
+};
+
+
 
 module.exports = {
   createPostService,
@@ -118,4 +145,5 @@ module.exports = {
   getAllPostsService,
   updatePostService,
   searchService,
+  getPostsByUserIdService,
 };

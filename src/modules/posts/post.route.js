@@ -9,6 +9,7 @@ const {
   getAllPostsController,
   updatePostController,
   searchPostcontroller,
+  getPostsByUserIdController,
 } = require("./post.controller");
 const authMiddleware = require("../../middleware/auth.middleware");
 route.post(
@@ -27,4 +28,5 @@ route.put(
   updatePostController,
 );
 route.get("/posts/search", authMiddleware, searchPostcontroller);
+route.get("/posts/user/:userId", authMiddleware, getPostsByUserIdController);
 module.exports = route;
