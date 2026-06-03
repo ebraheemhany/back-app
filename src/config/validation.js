@@ -37,15 +37,13 @@ const loginValidation = (data) => {
 // post validation
 const postValidation = (data) => {
   const schema = Joi.object({
-    content: Joi.string().min(1).max(500).required().messages({
+    content: Joi.string().min(1).max(500).optional().messages({
       "string.min": "Content cannot be empty",
       "string.max": "Content must be less than 500 characters",
-      "any.required": "Content is required",
     }),
   });
   return schema.validate(data, { abortEarly: false });
 };
-
 // Comment validation
 const commentValidation = (data) => {
   const schema = Joi.object({
