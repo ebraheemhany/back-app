@@ -32,7 +32,8 @@ const deletePostService = async (postId, userId) => {
   return post.rows[0];
 };
 
-const getAllPostsService = async () => {
+// في getAllPostsService — بعد ما تعرف userId من الـ JWT
+const getAllPostsService = async (userId) => {
   const posts = await pool.query(
     `SELECT 
       posts.id,
@@ -44,13 +45,16 @@ const getAllPostsService = async () => {
       users.username,
       users.profile_image,
       COUNT(DISTINCT likes.id) AS likes_count,
-      COUNT(DISTINCT comments.id) AS comments_count
+      COUNT(DISTINCT comments.id) AS comments_count,
+      -- ✅ هل الـ current user عمل like؟
+      BOOL_OR(likes.user_id = $1) AS is_liked
     FROM posts
     JOIN users ON posts.user_id = users.id
     LEFT JOIN likes ON likes.post_id = posts.id
     LEFT JOIN comments ON comments.post_id = posts.id
     GROUP BY posts.id, users.id
     ORDER BY posts.created_at DESC`,
+    [userId]
   );
   return posts.rows;
 };

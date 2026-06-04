@@ -21,3 +21,4 @@ route.get("/posts/:postId/comments", authMiddleware, getAllCommentsController);
 route.put("/comments/:commentId", authMiddleware, editCommentController);
 route.delete("/comments/:commentId", authMiddleware, deleteCommentController);
 module.exports = route;
+ 
