@@ -2,6 +2,7 @@ const {
   getUserProfileService,
   updateUserProfileService,
   updateProfileImageService,
+  getAllUsersService,
 } = require("./user.service");
 const { uploadToCloudinary, cloudinary } = require("../../config/cloudinary");
 const getUserProfileController = async (req, res) => {
