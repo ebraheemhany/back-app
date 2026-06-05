@@ -14,4 +14,5 @@ route.put(
   upload.single("profile_image"),
   updateUserProfileController,
 );
+route.get("/users", authMiddleware, getAllUsersController);
 module.exports = route;

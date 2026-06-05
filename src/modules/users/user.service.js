@@ -48,6 +48,22 @@ const updateUserProfileService = async (
 
   return update.rows[0];
 };
+// get all user 
+const getAllUsersService = async (currentUserId) => {
+  const users = await pool.query(
+    `SELECT 
+      id,
+      username,
+      email,
+      profile_image,
+      bio
+     FROM users
+     WHERE id != $1
+     ORDER BY created_at DESC`,
+    [currentUserId]
+  );
+  return users.rows;
+};
 
 
 

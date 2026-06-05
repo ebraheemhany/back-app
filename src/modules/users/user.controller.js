@@ -52,7 +52,17 @@ const updateUserProfileController = async (req, res) => {
   }
 };
 
+const getAllUsersController = async (req, res) => {
+  try {
+    const result = await getAllUsersService(req.user.userId);
+    res.status(200).json({ success: true, users: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getUserProfileController,
   updateUserProfileController,
+  getAllUsersController,
 };
