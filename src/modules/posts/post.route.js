@@ -20,7 +20,7 @@ route.post(
   createPostController,
 );
 route.delete("/posts/:postId", authMiddleware, deletePostController);
-route.get("/posts", getAllPostsController);
+route.get("/posts", authMiddleware, getAllPostsController);
 route.put(
   "/posts/:postId",
   authMiddleware,
