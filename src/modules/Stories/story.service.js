@@ -54,9 +54,10 @@ const getStoriesService = async (userId) => {
           'media_url', stories.media_url,
           'media_type', stories.media_type,
           'caption', stories.caption,
+          'text_content', stories.text_content,       -- ✅ كانت ناقصة
+          'background_color', stories.background_color, -- ✅ كانت ناقصة
           'created_at', stories.created_at,
           'expires_at', stories.expires_at,
-          -- ✅ هل اليوزر شافها
           'is_viewed', CASE 
             WHEN story_views.user_id IS NOT NULL THEN TRUE 
             ELSE FALSE 
@@ -67,11 +68,11 @@ const getStoriesService = async (userId) => {
      JOIN users ON stories.user_id = users.id
      LEFT JOIN story_views ON stories.id = story_views.story_id 
        AND story_views.user_id = $1
-     WHERE stories.expires_at > NOW()  -- ✅ مش منتهية
+     WHERE stories.expires_at > NOW()
      AND (
-       stories.user_id = $1  -- ✅ بتاعتك
+       stories.user_id = $1
        OR stories.user_id IN (
-         SELECT following_id FROM follows WHERE follower_id = $1 -- ✅ بتاعت الناس اللي بتتبعهم
+         SELECT following_id FROM follows WHERE follower_id = $1
        )
      )
      GROUP BY users.id
@@ -81,7 +82,6 @@ const getStoriesService = async (userId) => {
 
   return stories.rows;
 };
-
 // View Story
 const viewStoryService = async (userId, storyId) => {
   // check if story exist

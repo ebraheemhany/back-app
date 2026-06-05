@@ -21,4 +21,4 @@ route.post("/stories/:storyId/view", authMiddelware, viewStoryController);
 route.get("/stories/:storyId/views", authMiddelware, getStoryViewsController);
 route.delete("/stories/:storyId", authMiddelware, deleteStoryController);
 module.exports = route;
- 
+  
