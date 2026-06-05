@@ -6,6 +6,7 @@ const {
   getUserProfileController,
   updateUserProfileController,
   uploadProfileImageController,
+  getAllUsersController,
 } = require("./user.controller");
 route.get("/user/profile/:id", authMiddleware, getUserProfileController);
 route.put(
