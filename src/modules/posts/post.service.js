@@ -165,6 +165,32 @@ const getTrendingPostsService = async (userId) => {
   );
   return posts.rows;
 };
+const getPostByIdService = async (postId, userId) => {
+  const result = await pool.query(
+    `SELECT 
+      posts.id,
+      posts.content,
+      posts.media_url,
+      posts.media_type,
+      posts.created_at,
+      users.id AS user_id,
+      users.username,
+      users.profile_image,
+      COUNT(DISTINCT likes.id) AS likes_count,
+      COUNT(DISTINCT comments.id) AS comments_count,
+      BOOL_OR(likes.user_id = $2) AS is_liked
+    FROM posts
+    JOIN users ON posts.user_id = users.id
+    LEFT JOIN likes ON likes.post_id = posts.id
+    LEFT JOIN comments ON comments.post_id = posts.id
+    WHERE posts.id = $1
+    GROUP BY posts.id, users.id`,
+    [postId, userId],
+  );
+
+  if (result.rows.length === 0) throw new Error("Post not found");
+  return result.rows[0];
+};
 
 module.exports = {
   createPostService,
@@ -174,4 +200,5 @@ module.exports = {
   searchService,
   getPostsByUserIdService,
   getTrendingPostsService,
+  getPostByIdService,
 };

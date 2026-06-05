@@ -6,6 +6,7 @@ const {
   searchService,
   getPostsByUserIdService,
   getTrendingPostsService,
+  getPostByIdService,
 } = require("./post.service");
 const { uploadToCloudinary, cloudinary } = require("../../config/cloudinary");
 const pool = require("../../config/db");
@@ -201,7 +202,14 @@ const getTrendingPostsController = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
+const getPostByIdController = async (req, res) => {
+  try {
+    const post = await getPostByIdService(req.params.id, req.user.userId);
+    res.json({ success: true, post });
+  } catch (error) {
+    res.status(404).json({ success: false, message: error.message });
+  }
+};
 module.exports = {
   createPostController,
   deletePostController,
@@ -210,4 +218,5 @@ module.exports = {
   searchPostcontroller,
   getPostsByUserIdController,
   getTrendingPostsController,
+  getPostByIdController,
 };
