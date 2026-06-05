@@ -48,7 +48,7 @@ const updateUserProfileService = async (
 
   return update.rows[0];
 };
-// get all user 
+// get all user
 const getAllUsersService = async (currentUserId) => {
   const users = await pool.query(
     `SELECT 
@@ -60,15 +60,13 @@ const getAllUsersService = async (currentUserId) => {
      FROM users
      WHERE id != $1
      ORDER BY created_at DESC`,
-    [currentUserId]
+    [currentUserId],
   );
   return users.rows;
 };
 
-
-
 module.exports = {
   getUserProfileService,
   updateUserProfileService,
-
+  getAllUsersService,
 };
