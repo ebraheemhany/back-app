@@ -2,6 +2,7 @@ const {
   createStoryService,
   getStoriesService,
   viewStoryService,
+  deleteStoryService,
 } = require("./story.service");
 
 const createStoryContorller = async (req, res) => {
