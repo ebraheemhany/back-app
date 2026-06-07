@@ -3,14 +3,8 @@ const crypto = require("crypto");
 const pool = require("../../config/db");
 
 // 1 => generate ccess token
-const generateAccessToken = async (userId) => {
-  return jwt.sign(
-    { userId },
-
-    process.env.JWT_SECRET,
-
-    { expiresIn: "15m" },
-  );
+const generateAccessToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15m" });
 };
 
 // 2 => generate refresh token

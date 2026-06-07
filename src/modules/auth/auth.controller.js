@@ -49,7 +49,6 @@ const refreshTokenController = async (req, res) => {
   }
 
   try {
-    // check if token in db
     const stored = await verifyRefreshToken(token);
 
     if (!stored) {
@@ -58,15 +57,14 @@ const refreshTokenController = async (req, res) => {
         .json({ message: "Invalid or expired refresh token" });
     }
 
-    // ✅ generate new access token
-    const accessToken = generateAccessToken(stored.user_id);
+    // ✅ await هنا
+    const accessToken = await generateAccessToken(stored.user_id);
 
     res.status(200).json({ accessToken });
   } catch (error) {
     res.status(403).json({ message: error.message });
   }
 };
-
 
 // logout controller
 const logoutController = async (req, res) => {

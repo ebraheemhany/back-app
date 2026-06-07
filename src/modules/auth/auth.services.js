@@ -54,6 +54,6 @@ const loginService = async ({ email, password }) => {
       email: user.rows[0].email,
     },
   };
-};
+};   
 
 module.exports = { registerService, loginService };
