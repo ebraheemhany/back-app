@@ -1,7 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const { globalLimiter } = require("./config/rate.limit");
+
 require("dotenv").config();
 const cors = require("cors");
 const authRoute = require("./modules/auth/auth.route");
@@ -19,7 +19,7 @@ const passport = require("passport");
 require("./modules/auth/google.strategy");
 app.use(helmet());
 app.set("trust proxy", 1);
-app.use(globalLimiter); //protection all route
+
 const allowedOrigins = ["http://localhost:3000"];
 
 app.use(

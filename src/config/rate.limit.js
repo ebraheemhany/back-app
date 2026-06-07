@@ -3,12 +3,6 @@ const rateLimit = require("express-rate-limit");
 const skipOptions = (req) => req.method === "OPTIONS"; // ✅ استثني الـ preflight
 
 // protection all routes
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  skip: skipOptions, // ✅
-  message: { message: "Too many requests, please try again later" },
-});
 
 // protection auth route
 const authLimiter = rateLimit({
@@ -26,4 +20,4 @@ const otpLimiter = rateLimit({
   message: { message: "Too many OTP requests, please try again after an hour" },
 });
 
-module.exports = { globalLimiter, authLimiter, otpLimiter };
+module.exports = { authLimiter, otpLimiter };
