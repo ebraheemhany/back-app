@@ -57,8 +57,15 @@ const refreshTokenController = async (req, res) => {
         .json({ message: "Invalid or expired refresh token" });
     }
 
-    // ✅ await هنا
     const accessToken = await generateAccessToken(stored.user_id);
+
+    // ✅ ابعت الـ refreshToken تاني عشان يتجدد عمره
+    res.cookie("refreshToken", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({ accessToken });
   } catch (error) {
