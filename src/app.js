@@ -20,7 +20,10 @@ require("./modules/auth/google.strategy");
 app.use(helmet());
 app.set("trust proxy", 1);
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://social-app-8jsk-96rn9ciw5-ebraheemhanys-projects.vercel.app",
+];
 
 app.use(
   cors({
