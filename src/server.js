@@ -10,7 +10,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://social-app-8jsk-96rn9ciw5-ebraheemhanys-projects.vercel.app",
+      "https://social-app-8jsk.vercel.app",
     ],
     credentials: true,
   },
