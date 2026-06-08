@@ -44,7 +44,7 @@ const loginController = async (req, res) => {
 
 // refresh token
 const refreshTokenController = async (req, res) => {
-  const token = req.cookies.refreshToken;
+ const token = req.body.refreshToken || req.cookies.refreshToken;
 
   if (!token) {
     return res.status(401).json({ message: "No refresh token provided" });
