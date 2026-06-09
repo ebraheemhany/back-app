@@ -26,17 +26,21 @@ const sendMessageController = async (req, res) => {
       return res.status(400).json({ message: "Message content is required" });
     }
 
-    // ✅ sendMessageService بترجع الرسالة + الـ receiverId
     const { message, receiverId } = await sendMessageService(
       req.user.userId,
       parseInt(req.params.conversationId),
       content,
     );
 
-    // ✅ ابعت Real-time من الـ Controller
-    const socketId = global.connectedUsers.get(receiverId.toString());
-    if (socketId) {
-      global.io.to(socketId).emit("new_message", message);
+    // ✅ ابعت للـ conversation room كله (sender + receiver)
+    global.io
+      .to(`conversation_${req.params.conversationId}`)
+      .emit("new_message", message);
+
+    // ✅ ابعت للـ receiver لو مش في الـ room
+    const receiverSocketId = global.connectedUsers.get(receiverId.toString());
+    if (receiverSocketId) {
+      global.io.to(receiverSocketId).emit("new_message", message);
     }
 
     res.status(201).json({ message });
