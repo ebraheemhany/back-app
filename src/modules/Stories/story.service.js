@@ -107,10 +107,11 @@ const viewStoryService = async (userId, storyId) => {
 
 // Get Story Views (مين شاف الـ Story)
 const getStoryViewsService = async (userId, storyId) => {
+  const storyIdNum = parseInt(storyId);
   // تأكد إنك صاحب الـ Story
   const story = await pool.query(
     `SELECT * FROM stories WHERE id = $1 AND user_id = $2`,
-    [storyId, userId],
+    [storyIdNum, userId],
   );
 
   if (story.rows.length === 0) {
@@ -127,7 +128,7 @@ const getStoryViewsService = async (userId, storyId) => {
      JOIN users ON story_views.user_id = users.id
      WHERE story_views.story_id = $1
      ORDER BY story_views.viewed_at DESC`,
-    [storyId],
+    [storyIdNum],
   );
 
   return {
