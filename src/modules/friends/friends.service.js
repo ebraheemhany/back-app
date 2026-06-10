@@ -1,4 +1,8 @@
-const pool = require("../../config/db")
+const pool = require("../../config/db");
+
+const getFriendsService = async (userId) => {
+  const result = await pool.query(
+    `SELECT 
       users.id,
       users.username,
       users.profile_image,
@@ -9,7 +13,7 @@ const pool = require("../../config/db")
        AND f1.follower_id = f2.following_id
      JOIN users ON users.id = f1.following_id
      WHERE f1.follower_id = $1`,
-    [userId]
+    [userId],
   );
 
   return result.rows;
