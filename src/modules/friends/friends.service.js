@@ -1,7 +1,4 @@
-// friend.service.js
-const getFriendsService = async (userId) => {
-  const result = await pool.query(
-    `SELECT 
+const pool = require("../../config/db")
       users.id,
       users.username,
       users.profile_image,
