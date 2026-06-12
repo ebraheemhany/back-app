@@ -15,7 +15,7 @@ const googleController = async (req, res) => {
     });
 
     return res.redirect(
-      `https://social-app-8jsk.vercel.app//sign-in?token=${accessToken}`
+      `https://social-app-8jsk.vercel.app/sign-in?token=${accessToken}&refreshToken=${refreshToken}`,
     );
   } catch (error) {
     return res.status(500).json({ message: error.message });
