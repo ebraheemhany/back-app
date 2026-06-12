@@ -28,15 +28,21 @@ const registerService = async ({ username, email, password }) => {
 
 // login
 const loginService = async ({ email, password }) => {
-  // check email
   const user = await pool.query("SELECT * FROM users WHERE email = $1", [
     email,
   ]);
+
   if (user.rows.length === 0) {
     throw new Error("invalid email");
   }
 
-  // check password
+  // ✅ لو مفيش password يعني سجل بـ Google
+  if (!user.rows[0].password) {
+    throw new Error(
+      "This account uses Google login, please sign in with Google",
+    );
+  }
+
   const invalidPassword = await bcrypt.compare(password, user.rows[0].password);
   if (!invalidPassword) {
     throw new Error("invalid password");
@@ -54,6 +60,6 @@ const loginService = async ({ email, password }) => {
       email: user.rows[0].email,
     },
   };
-};   
+};
 
 module.exports = { registerService, loginService };
